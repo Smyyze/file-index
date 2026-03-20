@@ -58,4 +58,30 @@ file-index/
 
 ---
 
+## 2026-03-20 — Phase 1 built (core indexer + search CLI)
+
+### Added
+- `requirements.txt` — duckdb, watchdog, rich, pyyaml
+- `src/__init__.py` — package init
+- `src/schema.py` — DuckDB table definition with indexes
+- `src/indexer.py` — full directory scanner with auto-tagging, inline tag extraction, dry-run mode, stats
+- `src/search.py` — CLI search by text, tag, type, category, date
+- `config/directories.yaml` — configured `C:/Users/cs/L-C` and `C:/Users/cs/Projects`
+- `config/tags.yaml` — extension/directory auto-tag rules and aliases
+
+### Verified
+- Dry-run indexed 2,013 files (464 life-ops, 1,549 projects) in ~3 seconds
+- Skipped 488 binary/excluded files
+
+### Known limitations
+- Search matches on filename, path, tags, description only — no content indexing yet
+- Tags on most files will be auto-derived only (no inline tags unless files have `# tags:` comments)
+- Finding `GDOCS-UPLOAD-SETUP.md` via `"google docs"` depends on path match or manual tags
+
+### Next steps
+- Add content indexing (first N lines of text files) — Phase 2
+- Add file watcher for auto-updates — Phase 3
+
+---
+
 **Created:** 2026-03-20
