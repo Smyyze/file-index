@@ -9,10 +9,10 @@
 ## What This Project Does
 
 Intelligent file indexing system using DuckDB for fast search across all your work files:
-- Projects (`C:\Users\cs\Projects\`)
-- Research outputs (`C:\Users\cs\Projects\RESEARCH\`)
-- Life & Ops files (`C:\Users\cs\L-C\`)
-- Any other directories you specify
+- Project directories
+- Research outputs
+- Documentation
+- Any other directories you configure in `config/directories.yaml`
 
 **Key features:**
 - DuckDB database (fast analytical queries, millions of files)
@@ -22,12 +22,12 @@ Intelligent file indexing system using DuckDB for fast search across all your wo
 - Quick command lookup ("How do I upload to Google Docs?")
 - Auto-updating (watches for file changes)
 
-**Problem it solves:** Today we couldn't find `GDOCS-UPLOAD-SETUP.md` because:
-- It's in `scripts/` not `docs/`
-- Filename doesn't match search terms ("google docs")
+**Problem it solves:** Hard to find files when:
+- They're in unexpected directories
+- Filenames don't match search terms
 - No central index of key files
 
-With this system: `search "google docs upload"` → instant results with path, description, command
+With this system: `search "your query"` → instant results with path, tags, description
 
 ---
 
@@ -100,15 +100,16 @@ file-index/
 
 **Quick commands:**
 ```bash
-# When ready to build:
-cd C:/Users/cs/Projects/file-index
-pip install duckdb watchdog rich pyyaml
+# Setup:
+pip install -r requirements.txt
 
-# Run indexer (future):
-python -m src.indexer --directories config/directories.yaml
+# Index files:
+python -m src.indexer
 
-# Search (future):
-python -m src.search "google docs upload"
+# Search:
+python -m src.search "your query"
+python -m src.search --tag automation --type script
+python -m src.search --stats
 ```
 
 ---
@@ -134,48 +135,41 @@ Store executable commands with files:
 
 ---
 
-## Integration with Existing Systems
+## Configuration
 
-**Indexes:**
-- Life & Ops: `C:\Users\cs\L-C\` (docs, scripts, automation)
-- Projects: `C:\Users\cs\Projects\` (all active projects)
-- Research: `C:\Users\cs\Projects\RESEARCH\` (research outputs)
-- Site Navigator: `C:\Users\cs\Projects\site-navigator\`
+**Directories to index:**
+Configure in `config/directories.yaml` with:
+- Path to scan
+- Category label (projects, research, etc.)
+- Exclude patterns (git, caches, etc.)
 
-**Ignores:**
+**Auto-ignores:**
 - `.git` directories
 - `node_modules`, `venv`, `.venv`
 - `__pycache__`, `.pytest_cache`
 - Binary files (unless explicitly tagged)
-- Sensitive folders (configured in `directories.yaml`)
+- Sensitive folders (configure in `directories.yaml`)
 
 ---
 
 ## Use Cases
 
-**Scenario 1: Find a setup guide**
+**Scenario 1: Find documentation**
 ```bash
-$ python -m src.search "google docs setup"
-Results:
-1. scripts/GDOCS-UPLOAD-SETUP.md
-   Tags: upload, google, docs, setup
-   Command: python scripts/upload_to_gdocs.py {file}
+$ python -m src.search "deployment setup"
+Results: All files matching "deployment setup" in name/path/tags/description
 ```
 
 **Scenario 2: Find all automation scripts**
 ```bash
 $ python -m src.search --tag automation --type script
-Results:
-1. scripts/fill_uhc_interactive.py - UHC claims automation
-2. scripts/upload_to_gdocs.py - Google Docs upload
-3. scripts/flight_search.py - Flight search automation
+Results: All Python scripts tagged with automation
 ```
 
 **Scenario 3: What changed this week?**
 ```bash
 $ python -m src.search --modified-after 2026-03-17
-Results:
-(All files modified since March 17)
+Results: All files modified since March 17, 2026
 ```
 
 ---

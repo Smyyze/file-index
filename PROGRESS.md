@@ -6,9 +6,11 @@
 
 ## Current Status
 
-**Phase:** Phase 1 complete (core indexing)
-**Current task:** None — ready for Phase 2 (content indexing / smarter search)
-**Next action:** Add content indexing (first N lines of text files) so search finds files by what's *in* them, not just filename/tags
+**Phase:** Phase 1 complete (core indexing) ✅
+**Current task:** Ready for use and Phase 2 features
+**Next action:** Add content indexing (Phase 2) or use as-is for metadata search
+
+**Recent fix (2026-03-20):** Fixed search tool to skip schema init on read-only connection
 
 ---
 
@@ -24,9 +26,10 @@
 - [x] `src/schema.py` — DuckDB table + indexes
 - [x] `src/indexer.py` — directory scanner, auto-tagging, inline tag extraction, dry-run, stats
 - [x] `src/search.py` — CLI search by text / tag / type / category / date
-- [x] `config/directories.yaml` — L-C and Projects directories configured
+- [x] `config/directories.yaml` — Directories configured for indexing
 - [x] `config/tags.yaml` — extension + directory auto-tag rules
-- [x] Verified: dry-run indexes 2,013 files in ~3 seconds
+- [x] Verified: indexes 2000+ files in ~25 seconds
+- [x] Bug fix: search.py now works without schema errors (read-only connection)
 
 ---
 

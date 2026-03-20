@@ -8,12 +8,12 @@
 
 **Use regular `cc` command** (no secrets required):
 
-```powershell
-cd C:\Users\cs\Projects\file-index
-cc
+```bash
+cd /path/to/file-index
+cc  # or just 'claude' if cc not available
 ```
 
-This project is **safe for `cc` restricted profile** — only reads local files, no AWS secrets needed.
+This project is **safe for restricted profiles** — only reads local files, no AWS secrets needed.
 
 ---
 
@@ -39,37 +39,48 @@ This project is **safe for `cc` restricted profile** — only reads local files,
 
 Solves: "Can't find files across projects"
 
-Example problem:
-- Searched for "google docs upload"
-- File is `scripts/GDOCS-UPLOAD-SETUP.md`
-- Located in unexpected directory
-- Filename doesn't contain search terms
+Problems it fixes:
+- Files are in unexpected directories
+- Filenames don't match search terms
+- No metadata search (tags, descriptions)
+- grep/find are slow for large codebases
 
-Solution: DuckDB index with tags, descriptions, and fast search.
+Solution: DuckDB index with tags, descriptions, and fast search (<100ms).
 
 ---
 
-## Quick Commands
+## How to Use (Simple)
+
+**First time setup:**
+```bash
+pip install -r requirements.txt
+python -m src.indexer  # Build the index (20-30 seconds)
+```
+
+**Search (one command):**
+```bash
+python -m src.search "your search query"
+python -m src.search --tag automation
+python -m src.search --type script --category projects
+python -m src.search --modified-after 2026-03-15
+python -m src.search --stats  # Show index statistics
+```
+
+**Rebuild index (when files change):**
+```bash
+python -m src.indexer  # Re-indexes everything
+```
+
+## Development Commands
 
 ```bash
-# Check git status
+# Check status
 git status
 git log --oneline -5
-
-# See what's next
 cat PROGRESS.md
 
-# When ready to build:
-pip install -r requirements.txt  # (when file exists)
-
-# Run tests (future):
-pytest
-
-# Index files (future):
-python -m src.indexer --config config/directories.yaml
-
-# Search (future):
-python -m src.search "google docs upload"
+# Dry run (preview without writing)
+python -m src.indexer --dry-run
 ```
 
 ---
@@ -157,12 +168,16 @@ file-index/
 ## Testing Strategy
 
 **Phase 1 (MVP):**
-1. Index small directory (100 files)
-2. Search for known files
-3. Verify results are correct
-4. Measure performance
+1. Run `python -m src.indexer` to index configured directories
+2. Search for files you know exist
+3. Verify results match expectations
+4. Check performance: search should complete in <100ms
 
-**Success = Finding `GDOCS-UPLOAD-SETUP.md` with query "google docs upload"**
+**Success criteria:**
+- Index builds successfully
+- Search finds relevant files
+- Fast results (<100ms)
+- No sensitive data in index
 
 ---
 

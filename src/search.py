@@ -21,8 +21,6 @@ from rich.console import Console
 from rich.table import Table
 from rich import box
 
-from src.schema import init_schema
-
 console = Console()
 
 DB_PATH = Path(__file__).parent.parent / "file_index.duckdb"
@@ -124,7 +122,6 @@ def main() -> None:
         sys.exit(1)
 
     conn = duckdb.connect(str(DB_PATH), read_only=True)
-    init_schema(conn)
 
     if args.stats:
         from src.indexer import show_stats

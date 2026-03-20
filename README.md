@@ -8,30 +8,32 @@ Find any file across your projects instantly with tags, descriptions, and relati
 
 ## Quick Start
 
-**Read first:**
-1. `CLAUDE.md` — Project instructions and context
-2. `PROGRESS.md` — Current status
-3. `BUILD_PLAN.md` — Development roadmap
-
-**For developers:**
+**Index your files:**
 ```bash
 cd C:/Users/cs/Projects/file-index
 pip install -r requirements.txt
-
-# Index directories (when ready)
-python -m src.indexer --config config/directories.yaml
-
-# Search
-python -m src.search "google docs upload"
+python -m src.indexer
 ```
+
+**Search (one command):**
+```bash
+python -m src.search "your search query"
+python -m src.search --tag automation
+python -m src.search --type script
+```
+
+**For new sessions:**
+1. `QUICKSTART.md` — Start here
+2. `CLAUDE.md` — Project instructions
+3. `PROGRESS.md` — Current status
 
 ---
 
 ## The Problem
 
-Today couldn't find `scripts/GDOCS-UPLOAD-SETUP.md` when searching for "google docs upload" because:
-- It's in `scripts/` not `docs/` (unexpected location)
-- Filename doesn't contain "google" (non-obvious name)
+Hard to find files across projects because:
+- Files are in unexpected locations
+- Filenames don't match what you're looking for
 - No way to search by description or tags
 - grep/find are slow and don't search metadata
 
@@ -53,30 +55,20 @@ Build a DuckDB-based file index with:
 
 ```bash
 # Find files by name or description
-$ search "google docs upload"
-Results:
-1. scripts/GDOCS-UPLOAD-SETUP.md
-   Tags: [upload, google, docs, setup]
-   Command: python scripts/upload_to_gdocs.py {file}
+$ python -m src.search "deployment"
+Results: all files matching "deployment" in name, path, description, or tags
 
 # Find by tags
-$ search --tag automation --type script
-Results:
-1. scripts/fill_uhc_interactive.py - UHC claims automation
-2. scripts/upload_to_gdocs.py - Google Docs upload
-3. scripts/flight_search.py - Flight search
+$ python -m src.search --tag automation --type script
+Results: all Python scripts tagged with automation
 
 # Recent files
-$ search --modified-after "7 days ago"
-(All files modified in last 7 days)
+$ python -m src.search --modified-after 2026-03-15
+Results: all files modified since March 15, 2026
 
-# With related files
-$ search "upload_to_gdocs.py" --related
-Results:
-1. scripts/upload_to_gdocs.py
-   Related:
-   - scripts/GDOCS-UPLOAD-SETUP.md (documentation)
-   - scripts/upload_html_to_gdocs.py (variant)
+# Combine filters
+$ python -m src.search --category projects --type doc
+Results: all documentation files in projects category
 ```
 
 ---
