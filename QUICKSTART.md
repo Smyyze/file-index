@@ -53,6 +53,12 @@ Solution: DuckDB index with tags, descriptions, and fast search (<100ms).
 
 **First time setup:**
 ```bash
+# Copy example configs and customize
+cp config/directories.yaml.example config/directories.yaml
+cp config/tags.yaml.example config/tags.yaml
+# Edit config/directories.yaml with your directory paths
+
+# Install and build index
 pip install -r requirements.txt
 python -m src.indexer  # Build the index (20-30 seconds)
 ```

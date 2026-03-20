@@ -7,10 +7,17 @@ Quick reference for using the file index system.
 ## First Time Setup
 
 ```bash
+# Copy example configs
+cp config/directories.yaml.example config/directories.yaml
+cp config/tags.yaml.example config/tags.yaml
+
+# Edit config/directories.yaml with your paths
+# (e.g., /home/user/projects, /home/user/documents)
+
 # Install dependencies
 pip install -r requirements.txt
 
-# Build the index (configure directories in config/directories.yaml first)
+# Build the index
 python -m src.indexer
 ```
 

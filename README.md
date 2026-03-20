@@ -10,7 +10,13 @@ Find any file across your projects instantly with tags, descriptions, and relati
 
 **Index your files:**
 ```bash
-cd C:/Users/cs/Projects/file-index
+cd /path/to/file-index
+
+# First time: copy example configs
+cp config/directories.yaml.example config/directories.yaml
+cp config/tags.yaml.example config/tags.yaml
+# Edit config/directories.yaml with your paths
+
 pip install -r requirements.txt
 python -m src.indexer
 ```

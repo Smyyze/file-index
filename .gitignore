@@ -3,6 +3,10 @@
 *.duckdb.wal
 file_index.duckdb*
 
+# User-specific config (use .example files as templates)
+config/directories.yaml
+config/tags.yaml
+
 # Python
 __pycache__/
 *.py[cod]

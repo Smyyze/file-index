@@ -1,0 +1,33 @@
+auto_tags:
+  extensions:
+    ".py": [script, python]
+    ".md": [doc, markdown]
+    ".yaml": [config, yaml]
+    ".yml": [config, yaml]
+    ".json": [config, data, json]
+    ".sql": [sql, query]
+    ".sh": [script, shell]
+    ".bat": [script, batch]
+    ".txt": [doc, text]
+    ".csv": [data, csv]
+    ".env": [config, env]
+    ".toml": [config, toml]
+    ".ini": [config]
+    ".cfg": [config]
+    ".html": [web, html]
+    ".css": [web, css]
+    ".js": [script, javascript, web]
+    ".ts": [script, typescript, web]
+
+  directories:
+    scripts: [script, automation]
+    docs: [documentation, doc]
+    examples: [example, reference]
+    tests: [test, testing]
+    config: [config, configuration]
+    research: [research]
+
+tag_aliases:
+  automation: [automate, bot, script, auto]
+  documentation: [docs, doc, readme, guide]
+  testing: [test, tests, spec]

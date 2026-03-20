@@ -1,0 +1,24 @@
+directories:
+  - path: /path/to/your/projects
+    category: projects
+    exclude:
+      - "**/.git/**"
+      - "**/__pycache__/**"
+      - "**/node_modules/**"
+      - "**/.venv/**"
+      - "**/venv/**"
+      - "**/*.duckdb"
+      - "**/*.duckdb.wal"
+
+  - path: /path/to/your/documents
+    category: docs
+    exclude:
+      - "**/.git/**"
+      - "**/__pycache__/**"
+      - "**/node_modules/**"
+
+  - path: /path/to/your/research
+    category: research
+    exclude:
+      - "**/.git/**"
+      - "**/venv/**"
